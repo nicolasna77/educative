@@ -12,33 +12,20 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Title from "@/components/Tiltle";
+import { getAllProfs } from "@/actions/prof";
 
 const ProfPage = () => {
-  const data = [
-    {
-      name: "Prof 1",
-      subject: "Mathématiques",
-      hiringDate: "12 avril 2024",
-      school: "Lycée de Dhaka",
-      city: "Dhaka, Bengladesh",
-      profilePicture: image,
-    },
-    {
-      name: "Prof 2",
-      subject: "Physique",
-      hiringDate: "12 avril 2024",
-      school: "Lycée de Dhaka",
-      city: "Dhaka, Bengladesh",
-      profilePicture: image,
-    },
-    // Ajoutez plus de professeurs ici
-  ];
+  const allProfs:any = getAllProfs()
+  console.log(allProfs)
+  if (allProfs.length === 0) {
+    return <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-center mt-16">No profs found</h2>;
+  }
 
   return (
     <main>
       <Title back>Professeurs</Title>
       <div className="container mb-5 mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 m-auto md:grid-cols-3 lg:w-3/4">
-        {data.map((item, index) => (
+        {/* {allProfs ? allProfs.map((item: any, index: any) => (
           <Card key={index}>
             <CardHeader className="mb-2 pb-0">
               <CardTitle className="text-lg sm:text-base md:text-lg">
@@ -92,7 +79,7 @@ const ProfPage = () => {
               </div>
             </CardFooter>
           </Card>
-        ))}
+        ))} */}
       </div>
     </main>
   );
