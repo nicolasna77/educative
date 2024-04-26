@@ -1,6 +1,10 @@
+"use client";
 import Image from "next/image";
 import logo from "../../src/app/favicon.ico";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 const Header = () => {
+  const router = useRouter();
   return (
     <header>
       <nav className="bg-white border border-gray-200 px-4 lg:px-6 py-2.5 ">
@@ -15,6 +19,16 @@ const Header = () => {
               Educative
             </span>
           </a>
+
+          <div>
+            <Button
+              onClick={() => {
+                router.push("/admin");
+              }}
+            >
+              Admin
+            </Button>
+          </div>
         </div>
       </nav>
     </header>
