@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/card";
 import Image from "next/image";
 import image from "../favicon.ico";
+import Title from "@/components/Tiltle";
 
 const EtudiantsPage = () => {
   const students = [
@@ -53,6 +54,7 @@ const EtudiantsPage = () => {
 
   return (
     <main>
+      <Title back>Étudiants</Title>
       <div className="container mb-5 mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:w-3/4">
         {students.map((student, index) =>
           student.courses.map((course, courseIndex) => (

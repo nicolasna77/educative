@@ -11,6 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import Title from "@/components/Tiltle";
 
 const ProfPage = () => {
   const data = [
@@ -35,7 +36,8 @@ const ProfPage = () => {
 
   return (
     <main>
-      <div className="container mb-5 mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:w-3/4">
+      <Title back>Professeurs</Title>
+      <div className="container mb-5 mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 m-auto md:grid-cols-3 lg:w-3/4">
         {data.map((item, index) => (
           <Card key={index}>
             <CardHeader className="mb-2 pb-0">
