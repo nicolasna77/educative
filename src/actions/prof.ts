@@ -10,6 +10,14 @@ export const getAllProfs = async () => {
   });
 };
 
+export const deleteProf = async (id: any) => {
+  return await prisma.prof.delete({
+    where: {
+      id: id,
+    },
+  });
+};
+
 export const getProfById = async (id: any) => {
   return await prisma.prof.findUnique({
     where: {

@@ -9,14 +9,14 @@ interface TitleProps {
 
 const Title = ({ back, children }: TitleProps) => {
   return (
-    <div className="flex items-center py-4 gap-4">
+    <div className="flex items-center px-4 py-4 gap-4">
       {back && (
         <Link className="flex items-center" href={"/"}>
-          <BiArrowBack className="h-6 w-6" />
+          <BiArrowBack className="h-6 w-6 self-center" />
         </Link>
       )}
-      <h1 className="mb-4 text-xl font-extrabold leading-none tracking-tight flex-1 text-gray-900 md:text-5xl  dark:text-white">
-        <span className="flex items-center h-full">{children}</span>
+      <h1 className="mb-4 text-xl font-extrabold align-middle leading-none tracking-tight flex-1 text-gray-900 md:text-5xl flex items-center ">
+        {children}
       </h1>
     </div>
   );
