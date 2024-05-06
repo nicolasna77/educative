@@ -36,8 +36,8 @@ const ListProf = ({ allProfs, admin }: props) => {
               </CardTitle>
               {admin && <Action LinkDelete="" LinkEdit="" />}
             </div>
-            <div className="mr-2 rounded bg-green-200 pl-2 pr-2 text-sm font-bold text-green-700 sm:text-xs md:text-sm">
-              {item.cours.length} cours
+            <div className="mr-2 rounded  bg-green-200 pl-2 pr-2 text-sm font-bold text-green-700 sm:text-xs md:text-sm">
+              {item.coursEnseignes.length} cours
             </div>
           </CardHeader>
           <CardContent>
@@ -46,7 +46,12 @@ const ListProf = ({ allProfs, admin }: props) => {
                 <CardDescription
                   className={`text-base font-medium text-black sm:text-sm md:text-base `}
                 >
-                  {item.cours.map((cours: any) => cours.titre).join(", ")}
+                  <div>
+                    {" "}
+                    {item.coursEnseignes
+                      .map((cours: any) => cours.titre)
+                      .join(", ")}
+                  </div>
 
                   <div className={`flex items-center`}>
                     <div className={`mr-5 text-sm sm:text-xs md:text-sm `}>

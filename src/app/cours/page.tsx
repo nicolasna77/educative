@@ -21,9 +21,8 @@ const CoursPage = async () => {
   return (
     <main>
       <Title back>Cours</Title>
-      <div className="container mb-5 mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:w-3/4">
-        <ListCour cours={cours} />
-      </div>
+
+      <ListCour cours={cours} />
     </main>
   );
 };

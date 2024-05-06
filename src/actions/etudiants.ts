@@ -1,9 +1,12 @@
 import prisma from "../../prisma/script";
 
 export const getAllEtudiants = async () => {
-  return await prisma.etudiant.findMany({
+  return await prisma.user.findMany({
     include: {
-      cours: true,
+      coursInscrits: true,
+    },
+    where: {
+      role: "USER",
     },
   });
 };
