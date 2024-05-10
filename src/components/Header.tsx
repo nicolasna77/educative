@@ -5,9 +5,12 @@ import Link from "next/link";
 import SignOut from "./signout";
 import { auth } from "../../auth";
 import { getUser } from "@/actions/user";
+import { redirect } from "next/navigation";
 const Header = async () => {
   const session = await auth();
-  const user = await getUser(session?.user?.email);
+
+  const user = session ? await getUser(session?.user?.email) : null;
+
   return (
     <header>
       <nav className="bg-white border border-gray-200 px-4 lg:px-6 py-2.5 ">

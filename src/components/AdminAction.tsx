@@ -1,7 +1,8 @@
-"use client";
+"use server";
 import { BiEdit, BiTrash } from "react-icons/bi";
 import { Button } from "./ui/button";
-import { deleteCour } from "@/actions/cours";
+import { deleteCours } from "@/actions/cours";
+import { revalidatePath } from "next/cache";
 
 type props = {
   idCour: string;
@@ -15,8 +16,10 @@ const Action = (idCour: props) => {
       </Button>
 
       <Button
-        onClick={() => {
-          deleteCour(idCour?.idCour);
+        formAction={async () => {
+          "use server";
+          await deleteCours(idCour?.idCour);
+          revalidatePath("/admin");
         }}
         variant={"destructive"}
         size={"icon"}

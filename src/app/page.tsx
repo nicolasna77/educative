@@ -6,8 +6,12 @@ import ListCour from "@/components/ListCour";
 import ListEtudiant from "@/components/ListEtudient";
 import ListProf from "@/components/ListProf";
 import Title from "@/components/Tiltle";
+import { redirect } from "next/navigation";
+import { auth } from "../../auth";
 
 export default async function Home() {
+  const session = await auth();
+  if (!session) redirect("/sign-in");
   const cours = await getAllCours();
   const profs = await getAllProfs();
   const etudiants = await getAllEtudiants();

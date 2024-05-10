@@ -105,3 +105,44 @@ export const updateEtudiant = async (id: any, data: any) => {
 
   return updatedEtudiant;
 };
+
+export const subscribeToCours = async (etudiantId: any, coursId: any) => {
+  const etudiant = await prisma.user.findUnique({
+    where: {
+      id: etudiantId,
+    },
+    include: {
+      coursInscrits: true,
+    },
+  });
+
+  const cours = await prisma.cour.findUnique({
+    where: {
+      id: coursId,
+    },
+    include: {
+      etudiants: true,
+    },
+  });
+
+  if (etudiant && cours) {
+    if (cours.places > cours.etudiants.length) {
+      await prisma.user.update({
+        where: {
+          id: etudiantId,
+        },
+        data: {
+          coursInscrits: {
+            connect: {
+              id: coursId,
+            },
+          },
+        },
+      });
+
+      return true;
+    }
+  }
+
+  return false;
+};

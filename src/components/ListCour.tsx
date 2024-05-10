@@ -11,28 +11,18 @@ import {
   CardContent,
 } from "./ui/card";
 import { subscribeToCours } from "@/actions/etudiants";
-
+import { redirect } from "next/navigation";
 const ListCour = async ({ allCours, admin }: any) => {
   const session = await auth();
-  const user = await getUser(session?.user?.email);
+  const user = session ? await getUser(session?.user?.email) : null;
 
+  if (!session) redirect("/sign-in");
   return (
     <div className=" mb-5 mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 m-auto md:grid-cols-3 ">
-<<<<<<< HEAD
       {allCours.map((item: any, index: any) => {
         const isUserEnrolled = item.etudiants.some(
           (etudiant: any) => etudiant.id === user.id
         );
-=======
-      {allCours?.map((item: any, index: number) => (
-        <Card key={index}>
-          <CardHeader>
-            <div className="flex justify-between items-center">
-              <CardTitle className="text-lg sm:text-base md:text-lg">
-                {item.titre}
-              </CardTitle>
->>>>>>> b80d7d906e7c2cfaf146215268d796fb4821d2e4
-
         return (
           <Card key={index}>
             <CardHeader>

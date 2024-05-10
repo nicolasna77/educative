@@ -1,4 +1,4 @@
-import { addCours, getAllCours } from "@/actions/cours";
+import { createCours, getAllCours } from "@/actions/cours";
 import { getAllEtudiants } from "@/actions/etudiants";
 import Title from "@/components/Tiltle";
 import { Button } from "@/components/ui/button";
@@ -13,25 +13,31 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
 import { auth } from "../../../auth";
 import { getUser } from "@/actions/user";
 import { revalidatePath } from "next/cache";
 
 const AdminPage = async () => {
   const cours = await getAllCours();
-  const sessions = await auth();
+  const session = await auth();
 
-  const user = await getUser(sessions?.user?.email);
-  const etudiants = await getAllEtudiants();
+  const user = session ? await getUser(session?.user?.email) : null;
+
+  const createCour = async (formData: FormData) => {
+    "use server";
+    const data = {
+      titre: formData.get("titre"),
+      resume: formData.get("resume"),
+      profId: user?.id,
+      niveau: "debutant",
+      places: 10,
+    };
+    console.log(data);
+    await createCours(data);
+    revalidatePath("/admin");
+  };
+
   return (
     <div>
       <section className="border-b py-8">
@@ -48,18 +54,7 @@ const AdminPage = async () => {
                 <DialogHeader>
                   <DialogTitle>Ajouter un cour</DialogTitle>
                 </DialogHeader>
-                <form
-                  action={async (formData) => {
-                    "use server";
-                    await addCours({
-                      titre: formData.get("titre"),
-                      resume: formData.get("resume"),
-                      etudiants: formData.get("etudiants"),
-                      profId: user?.id,
-                    });
-                    revalidatePath("/admin");
-                  }}
-                >
+                <form action={createCour}>
                   <div className="grid gap-4 py-4">
                     <div className="grid grid-cols-4 items-center gap-4">
                       Titre
@@ -70,22 +65,7 @@ const AdminPage = async () => {
                       <Input id="resume" name="resume" className="col-span-3" />
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">
-                      étudients
-                      <Select>
-                        <SelectTrigger className="w-[180px]">
-                          <SelectValue placeholder="selectionnée un étudients" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectGroup>
-                            <SelectLabel>étudients</SelectLabel>
-                            {etudiants.map((etudiant, index) => (
-                              <SelectItem key={index} value={etudiant.name}>
-                                {etudiant.name}
-                              </SelectItem>
-                            ))}
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
+                      Niveau
                     </div>
                   </div>
                   <DialogFooter>
