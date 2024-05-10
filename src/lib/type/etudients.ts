@@ -1,5 +1,5 @@
 export type Etudient = {
-  id: number;
+  id: string;
   name: string;
   city: string;
   profilePicture: string;

@@ -1,7 +1,6 @@
 import Image from "next/image";
 import logo from "../../src/app/favicon.ico";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import SignOut from "./signout";
 const Header = () => {

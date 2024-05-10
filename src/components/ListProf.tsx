@@ -8,7 +8,7 @@ import {
   CardDescription,
   CardFooter,
 } from "./ui/card";
-import Action from "./action";
+import Action from "./AdminAction";
 import { List } from "lucide-react";
 
 type props = {
@@ -46,19 +46,15 @@ const ListProf = ({ allProfs, admin }: props) => {
                 <CardDescription
                   className={`text-base font-medium text-black sm:text-sm md:text-base `}
                 >
-                  <div>
-                    {" "}
-                    {item.coursEnseignes
-                      .map((cours: any) => cours.titre)
-                      .join(", ")}
-                  </div>
-
-                  <div className={`flex items-center`}>
-                    <div className={`mr-5 text-sm sm:text-xs md:text-sm `}>
-                      {item.school}
-                    </div>
-                  </div>
+                  {item.coursEnseignes
+                    .map((cours: any) => cours.titre)
+                    .join(", ")}
                 </CardDescription>
+                <div className={`flex items-center`}>
+                  <div className={`mr-5 text-sm sm:text-xs md:text-sm `}>
+                    {item.school}
+                  </div>
+                </div>
               </div>
             </div>
           </CardContent>

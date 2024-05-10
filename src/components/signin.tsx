@@ -11,6 +11,7 @@ import {
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import { Label } from "./ui/label";
 
 export function SignIn() {
   return (
@@ -23,20 +24,18 @@ export function SignIn() {
           action={async (formData) => {
             "use server";
 
-            const sign = await signIn("credentials", {
+            await signIn("credentials", {
               email: formData.get("email"),
               password: formData.get("password"),
               callbackUrl: "/",
               redirect: true,
             });
-            console.log(sign);
           }}
         >
           <CardContent>
             <div className="grid w-full items-center gap-4">
-              <label>Email </label>
-              <Input name="email" type="email" />
-
+              Email
+              <Input id="email" name="email" type="email" />
               <label>
                 Password
                 <Input name="password" type="password" />

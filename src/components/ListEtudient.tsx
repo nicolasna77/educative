@@ -8,14 +8,14 @@ import {
   CardContent,
 } from "./ui/card";
 import { Key } from "react";
-import Action from "./action";
+import Action from "./AdminAction";
 
 type CardEtudiantProps = {
   etudiant: any;
   admin?: boolean;
 };
 
-const ListEtudiant = ({ etudiant, admin }: CardEtudiantProps) => {
+const ListEtudiant = ({ etudiant, admin }: any) => {
   return (
     <div className="mb-5 mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
       {etudiant.map((item: any, index: any) => (
@@ -23,7 +23,7 @@ const ListEtudiant = ({ etudiant, admin }: CardEtudiantProps) => {
           <CardHeader>
             <div className="flex justify-between items-center">
               <CardTitle className="text-lg sm:text-base md:text-lg">
-                {item.nom}
+                {item.name}
               </CardTitle>
               {admin && <Action LinkDelete="" LinkEdit="" />}
             </div>
