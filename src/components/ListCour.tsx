@@ -9,7 +9,7 @@ import {
 } from "./ui/card";
 
 const ListCour = ({ cours, admin }: any) => {
-  return cours.map((item, index) => (
+  return cours?.map((item: any, index: number) => (
     <Card key={index}>
       <CardHeader>
         <div className="flex justify-between items-center">
