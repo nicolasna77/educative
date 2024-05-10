@@ -3,7 +3,11 @@ import logo from "../../src/app/favicon.ico";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import SignOut from "./signout";
-const Header = () => {
+import { auth } from "../../auth";
+import { getUser } from "@/actions/user";
+const Header = async () => {
+  const session = await auth();
+  const user = await getUser(session?.user?.email);
   return (
     <header>
       <nav className="bg-white border border-gray-200 px-4 lg:px-6 py-2.5 ">
@@ -19,7 +23,15 @@ const Header = () => {
             </span>
           </Link>
 
-          <div>
+          <div className="flex">
+            {user && user.role == "PROF" && (
+              <Link href="/admin">
+                <Button variant={"outline"} className="mr-2">
+                  Admin
+                </Button>
+              </Link>
+            )}
+
             <SignOut />
           </div>
         </div>

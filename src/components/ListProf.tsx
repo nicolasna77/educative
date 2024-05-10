@@ -32,7 +32,7 @@ const ListProf = ({ allProfs, admin }: props) => {
           <CardHeader className="mb-2 pb-0">
             <div className="flex justify-between items-center">
               <CardTitle className="text-lg sm:text-base md:text-lg">
-                {item.nom}
+                {item.name}
               </CardTitle>
               {admin && <Action LinkDelete="" LinkEdit="" />}
             </div>
@@ -41,20 +41,15 @@ const ListProf = ({ allProfs, admin }: props) => {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-5 items-center gap-x-3">
-              <div className="col-span-3">
-                <CardDescription
-                  className={`text-base font-medium text-black sm:text-sm md:text-base `}
-                >
-                  {item.coursEnseignes
-                    .map((cours: any) => cours.titre)
-                    .join(", ")}
-                </CardDescription>
-                <div className={`flex items-center`}>
-                  <div className={`mr-5 text-sm sm:text-xs md:text-sm `}>
-                    {item.school}
-                  </div>
-                </div>
+            <h4>Cours données : </h4>
+            <ul className="max-w-md space-y-1 text-gray-500 list-disc list-inside ">
+              {item.coursEnseignes.map((cours: any) => (
+                <li key={cours.id}>{cours.titre}</li>
+              ))}
+            </ul>
+            <div className={`flex items-center`}>
+              <div className={`mr-5 text-sm sm:text-xs md:text-sm `}>
+                {item.school}
               </div>
             </div>
           </CardContent>

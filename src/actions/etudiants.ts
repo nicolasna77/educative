@@ -10,3 +10,27 @@ export const getAllEtudiants = async () => {
     },
   });
 };
+
+export const subscribeToCours = async (userId: string, coursId: string) => {
+  await prisma.user.update({
+    where: { id: userId },
+    data: {
+      coursInscrits: {
+        connect: {
+          id: coursId,
+        },
+      },
+    },
+  });
+
+  return await prisma.cour.update({
+    where: { id: coursId },
+    data: {
+      etudiants: {
+        connect: {
+          id: userId,
+        },
+      },
+    },
+  });
+};
