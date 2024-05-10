@@ -1,5 +1,4 @@
-import Action from "./action";
-import React from "react";
+import Action from "./AdminAction";
 import {
   Card,
   CardHeader,
@@ -20,9 +19,9 @@ const ListCour = ({ allCours, admin }: any) => {
                 {item.titre}
               </CardTitle>
 
-              {admin && <Action LinkDelete="" LinkEdit="" />}
+              {admin && <Action idCour={item.id} />}
             </div>{" "}
-            Professeurs {item.prof.nom}
+            Professeurs: {item.prof.name}
           </CardHeader>
           <CardFooter>
             <div className="grid grid-cols-5 items-center gap-x-3">
@@ -31,11 +30,11 @@ const ListCour = ({ allCours, admin }: any) => {
                   className={`text-base font-medium text-black sm:text-sm md:text-base `}
                 >
                   <h2 className="mb-2 text-lg font-semibold text-gray-900 ">
-                    Etudiants
+                    Etudiants :
                   </h2>
                   <ul className="max-w-md space-y-1 text-gray-500 list-disc list-inside ">
                     {item.etudiants.map((etudiant: any, index: string) => (
-                      <li key={index}> {etudiant.nom}</li>
+                      <li key={index}> {etudiant.name}</li>
                     ))}
                   </ul>
                 </CardContent>

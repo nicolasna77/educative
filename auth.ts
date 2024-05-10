@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { UsersController } from "./src/lib/controllers/UsersController";
+import { User } from "@prisma/client";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
