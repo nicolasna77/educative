@@ -9,10 +9,10 @@ import {
   CardContent,
 } from "./ui/card";
 
-const ListCour = ({ cours, admin }: any) => {
+const ListCour = ({ allCours, admin }: any) => {
   return (
     <div className=" mb-5 mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 m-auto md:grid-cols-3 ">
-      {cours?.map((item: any, index: number) => (
+      {allCours?.map((item: any, index: number) => (
         <Card key={index}>
           <CardHeader>
             <div className="flex justify-between items-center">
