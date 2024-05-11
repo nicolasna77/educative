@@ -35,9 +35,7 @@ export const getAllCours = async () => {
 
 export const deleteCours = async (id: string) => {
   const deletedCours = await prisma.cour.delete({
-    where: {
-      id: id,
-    },
+    where: { id: id },
   });
   revalidatePath("/admin");
 
@@ -86,13 +84,19 @@ export const getCoursById = async (id: any) => {
 };
 
 export const createCours = async (data: any) => {
-  const newCours = await prisma.cour.create({
-    data: {
-      ...data,
-    },
+  // Créer le nouveau cours avec Prisma...
+  const newCour = await prisma.cour.create({
+    data: { ...data },
   });
 
-  return newCours;
+  // Vider le cache Redis
+  client.del("coursData", (err) => {
+    if (err) {
+      console.error("Error deleting cache:", err);
+    }
+  });
+
+  return newCour;
 };
 
 export const updateCours = async (id: any, data: any) => {

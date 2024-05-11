@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import ListCour from "@/components/ListCour";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -17,23 +18,31 @@ import { Input } from "@/components/ui/input";
 import { auth } from "../../../auth";
 import { getUser } from "@/actions/user";
 import { revalidatePath } from "next/cache";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const AdminPage = async () => {
   const cours = await getAllCours();
   const session = await auth();
 
   const user = session ? await getUser(session?.user?.email) : null;
+  const level = ["Débutant", "intermediaire", "avance"];
 
   const createCour = async (formData: FormData) => {
     "use server";
+    const places = parseInt(formData.get("places"), 10);
     const data = {
       titre: formData.get("titre"),
       resume: formData.get("resume"),
       profId: user?.id,
-      niveau: "debutant",
-      places: 10,
+      niveau: formData.get("niveau"),
+      places: places,
     };
-    console.log(data);
     await createCours(data);
     revalidatePath("/admin");
   };
@@ -66,10 +75,29 @@ const AdminPage = async () => {
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">
                       Niveau
+                      <Select name="niveau">
+                        <SelectTrigger className="w-[180px]">
+                          <SelectValue placeholder="Niveau" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {level.map((item) => (
+                            <SelectItem key={item} value={item}>
+                              {item}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      Places
+                      <Input id="places" name="places" type="number" />
                     </div>
                   </div>
                   <DialogFooter>
-                    <Button type="submit">Enregistré</Button>
+                    <DialogClose asChild>
+                      <Button type="submit">Enregistré</Button>
+                    </DialogClose>
                   </DialogFooter>
                 </form>
               </DialogContent>

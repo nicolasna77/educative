@@ -11,17 +11,15 @@ import {
   CardContent,
 } from "./ui/card";
 import { subscribeToCours } from "@/actions/etudiants";
-import { redirect } from "next/navigation";
 const ListCour = async ({ allCours, admin }: any) => {
   const session = await auth();
   const user = session ? await getUser(session?.user?.email) : null;
 
-  if (!session) redirect("/sign-in");
   return (
     <div className=" mb-5 mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 m-auto md:grid-cols-3 ">
       {allCours.map((item: any, index: any) => {
         const isUserEnrolled = item.etudiants.some(
-          (etudiant: any) => etudiant.id === user.id
+          (etudiant: any) => etudiant.id === user?.id
         );
         return (
           <Card key={index}>
@@ -65,6 +63,7 @@ const ListCour = async ({ allCours, admin }: any) => {
                   className="w-full"
                   formAction={() => {
                     "use server";
+                    console.log("user", "d,zlf,az");
                     if (user) subscribeToCours(user.id, item.id);
                   }}
                   disabled={item.places - item.etudiants.length <= 0}

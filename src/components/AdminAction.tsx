@@ -16,9 +16,10 @@ const Action = (idCour: props) => {
       </Button>
 
       <Button
-        formAction={async () => {
+        formAction={() => {
           "use server";
-          await deleteCours(idCour?.idCour);
+          console.log("delete", idCour);
+          deleteCours(idCour?.idCour);
           revalidatePath("/admin");
         }}
         variant={"destructive"}
