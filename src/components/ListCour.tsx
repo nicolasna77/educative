@@ -11,7 +11,14 @@ import {
   CardContent,
 } from "./ui/card";
 import { subscribeToCours } from "@/actions/etudiants";
+
 const ListCour = async ({ allCours, admin }: any) => {
+  const subscribe = async (id: string) => async () => {
+    "use server";
+    console.log("user", "d,zlf,az");
+    if (user) await subscribeToCours(user.id, id);
+  };
+
   const session = await auth();
   const user = session ? await getUser(session?.user?.email) : null;
 
@@ -27,12 +34,15 @@ const ListCour = async ({ allCours, admin }: any) => {
               <div className="flex justify-between items-center">
                 <CardTitle className="text-lg sm:text-base md:text-lg">
                   {item.titre}
+                  <div className="bg-amber-600/30 rounded-full m-auto text-center  p-1 text-xs">
+                    {item.niveau}
+                  </div>
                   <p className="text-sm text-gray-500">
                     place disponible {item.places - item.etudiants.length}
                   </p>
                 </CardTitle>
 
-                {admin && <Action idCour={item.id} />}
+                {admin && <Action idCour={item.id} idProf={user?.id} />}
               </div>
             </CardHeader>
             <CardContent>
@@ -58,14 +68,10 @@ const ListCour = async ({ allCours, admin }: any) => {
             <CardFooter>
               {!admin && (
                 <Button
+                  // onClick={subscribe(item.id)}
                   variant={"secondary"}
                   size={"sm"}
                   className="w-full"
-                  formAction={() => {
-                    "use server";
-                    console.log("user", "d,zlf,az");
-                    if (user) subscribeToCours(user.id, item.id);
-                  }}
                   disabled={item.places - item.etudiants.length <= 0}
                 >
                   {isUserEnrolled ? "Inscrit" : "S'inscrire"}

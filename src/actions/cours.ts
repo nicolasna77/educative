@@ -37,7 +37,6 @@ export const deleteCours = async (id: string) => {
   const deletedCours = await prisma.cour.delete({
     where: { id: id },
   });
-  revalidatePath("/admin");
 
   // Invalidate the cached data in Redis
   client.del("coursData", (err) => {
@@ -45,7 +44,7 @@ export const deleteCours = async (id: string) => {
       console.error("Error deleting data from Redis:", err);
     }
   });
-
+  revalidatePath("/admin");
   return deletedCours;
 };
 
@@ -84,25 +83,21 @@ export const getCoursById = async (id: any) => {
 };
 
 export const createCours = async (data: any) => {
-  // Créer le nouveau cours avec Prisma...
-  const newCour = await prisma.cour.create({
+  await prisma.cour.create({
     data: { ...data },
   });
 
-  // Vider le cache Redis
-  client.del("coursData", (err) => {
-    if (err) {
-      console.error("Error deleting cache:", err);
-    }
-  });
-
-  return newCour;
+  // client.del("coursData", (err) => {
+  //   if (err) {
+  //     console.error("Error deleting cache:", err);
+  //   }
+  // });
 };
 
-export const updateCours = async (id: any, data: any) => {
+export const updateCours = async (idCour: any, data: any) => {
   const updatedCours = await prisma.cour.update({
     where: {
-      id: id,
+      id: idCour,
     },
     data: {
       ...data,

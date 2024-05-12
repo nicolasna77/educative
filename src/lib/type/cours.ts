@@ -3,3 +3,9 @@ export type Cours = {
   titre: string;
   profId: number;
 };
+
+export enum Level {
+  Débutant = "Débutant",
+  Intermédiaire = "Intermédiaire",
+  Avancé = "Avancé",
+}

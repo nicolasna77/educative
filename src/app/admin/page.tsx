@@ -1,5 +1,4 @@
 import { createCours, getAllCours } from "@/actions/cours";
-import { getAllEtudiants } from "@/actions/etudiants";
 import Title from "@/components/Tiltle";
 import { Button } from "@/components/ui/button";
 import ListCour from "@/components/ListCour";
@@ -25,14 +24,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Level } from "@/lib/type/cours";
+import { redirect } from "next/navigation";
 
 const AdminPage = async () => {
   const cours = await getAllCours();
   const session = await auth();
 
-  const user = session ? await getUser(session?.user?.email) : null;
-  const level = ["Débutant", "intermediaire", "avance"];
+  const user = session ? await getUser(session?.user?.email ?? "") : null;
 
+  if (user?.role != "PROF") {
+    redirect("/sign-in");
+  }
   const createCour = async (formData: FormData) => {
     "use server";
     const places = parseInt(formData.get("places"), 10);
@@ -80,7 +83,7 @@ const AdminPage = async () => {
                           <SelectValue placeholder="Niveau" />
                         </SelectTrigger>
                         <SelectContent>
-                          {level.map((item) => (
+                          {Object.values(Level).map((item) => (
                             <SelectItem key={item} value={item}>
                               {item}
                             </SelectItem>
